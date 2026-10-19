@@ -1,0 +1,4 @@
+#!/bin/sh
+# Keep the SSD host memory buffer off after resume (see /etc/local.d/nvme-hmb.start).
+[ "$1" = post ] && sh /etc/local.d/nvme-hmb.start
+exit 0

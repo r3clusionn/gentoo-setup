@@ -1,0 +1,10 @@
+sys-devel/gcc -pie -ssp -cet -default-znow -default-stack-clash-protection -fortran -sanitize -openmp
+sys-libs/glibc -ssp -cet
+sys-devel/binutils -cet
+# batch 21 audit (2026-10-17): session bus is started by ~/.xinitrc, no X autolaunch; frees libXt/libSM/libICE once xclip is replaced
+sys-apps/dbus -X
+# gcc -openmp: these default to openmp, and virtual/openmp would then pull llvm-runtimes/openmp + cmake
+# (all three are temporary build deps: gettext, eigen, and perl -> perl-cleaner -> portage-utils)
+app-portage/portage-utils -openmp
+sys-devel/gettext -openmp
+dev-cpp/eigen -openmp

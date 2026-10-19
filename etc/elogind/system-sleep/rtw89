@@ -1,0 +1,8 @@
+#!/bin/sh
+# Unload the rtw89 wifi driver before suspend and reload it after resume so the
+# RTL8922AE comes back with fresh firmware state and iwd rescans (new location).
+case $1 in
+pre)  modprobe -r rtw89_8922ae ;;
+post) modprobe rtw89_8922ae ;;
+esac
+exit 0

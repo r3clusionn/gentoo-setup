@@ -1,0 +1,97 @@
+# Only needed to verify signed remote binhost packages (not used); drops the gnupg chain
+app-portage/getuto-2.0
+# batch 11 (2026-10-10): empty acct-group packages udev wants; groups stay in /etc/group
+acct-group/cdrom-0-r3
+acct-group/dialout-0-r3
+acct-group/disk-0-r3
+acct-group/floppy-0-r1
+acct-group/kmem-0-r3
+acct-group/kvm-0-r3
+acct-group/lp-0-r3
+acct-group/sgx-0-r2
+acct-group/tape-0-r3
+acct-group/usb-0-r3
+# batch 11b (2026-10-10): count-only; groups stay in /etc/group, display-manager unused (xinit)
+gui-libs/display-manager-init-1.1.2-r3
+acct-group/audio-0-r3
+acct-group/input-0-r3
+acct-group/render-0-r3
+acct-group/video-0-r3
+acct-group/tty-0-r3
+# batch 13 (2026-10-11): GTK icons (file picker loses icons), dconf (GSettings
+# falls back to memory, no dconf-service), xinit login needs no xauth/iceauth,
+# git sync has verification off
+gnome-base/librsvg-2.62.3
+x11-themes/adwaita-icon-theme-49.0
+gnome-base/dconf-0.49.0
+x11-apps/xauth-1.1.5
+x11-apps/iceauth-1.0.11
+sec-keys/openpgp-keys-gentoo-release-20260125
+# 2026-10-13 audit: install-time helpers only (IDEPEND); glibc's localedef
+# replaces locale-gen (run by /usr/local/sbin/update); the .desktop database
+# and fontconfig-eselect hooks are skipped in postinst. Binpkgs are cached.
+sys-apps/locale-gen-3.10
+dev-util/desktop-file-utils-0.28-r1
+app-eselect/eselect-fontconfig-20220403
+
+# batch 15 (2026-10-14 audit): count-only. acct-groups/users stay in /etc/group and
+# /etc/passwd (acct-user unmerged with ACCT_USER_NO_MODIFY=1, so not locked).
+# libidn2: only glibc's dlopen for AI_IDN (unused). Install-time helpers and
+# data nothing reads at runtime; debugedit is only for FEATURES=installsources;
+# sandbox off in FEATURES; psmisc: openrc checks for fuser first.
+net-dns/libidn2-2.3.8
+dev-libs/libunistring-1.4.2
+sys-process/psmisc-23.7
+acct-group/jobserver-0
+acct-group/messagebus-0-r3
+acct-group/netdev-0-r3
+acct-group/pipewire-0-r2
+acct-group/portage-0-r2
+acct-group/shadow-0
+dev-util/gtk-update-icon-cache-3.24.42
+x11-misc/xbitmaps-1.1.4
+app-misc/mime-types-2.1.54
+dev-python/gentoo-common-1
+app-eselect/eselect-lua-4-r3
+dev-util/debugedit-5.3
+sys-apps/sandbox-2.49
+x11-base/xorg-drivers-21.1-r2
+acct-user/messagebus-0-r3
+acct-user/portage-0-r4
+# batch 17 (2026-10-15): xinit lists xrdb only for startx and its default xinitrc;
+# ~/.xinitrc runs xresload (own tool) instead
+x11-apps/xrdb-1.2.3-r2
+
+# batch 21b (2026-10-17): own /usr/local/sbin/resolvconf (scripts repo) serves iwd instead of openresolv
+virtual/resolvconf-2
+
+# batch 24 (2026-10-17): symlink-only packages (links kept, see profile/packages)
+app-alternatives/sh-0
+app-alternatives/awk-4
+app-alternatives/bzip2-1
+app-alternatives/gzip-1
+app-alternatives/tar-0
+app-alternatives/ninja-1
+# libpulse lists it, but on amd64 it uses compiler atomics; nothing links it
+dev-libs/libatomic_ops-7.10.0
+# batch 24 (2026-10-17): libxcb and xorg-server rebuilt without them (XDMCP off; glibc has reallocarray)
+x11-libs/libXdmcp-1.1.5
+dev-libs/libbsd-0.11.8
+app-crypt/libmd-1.2.0
+
+# 2026-10-18: virtuals whose providers are in world or glibc (pkgconf, libusb, glibc, dejavu, systemd-utils)
+virtual/pkgconfig-3
+virtual/libusb-1-r2
+virtual/libintl-0-r2
+virtual/libiconv-0-r2
+virtual/ttf-fonts-1-r2
+virtual/tmpfiles-0-r7
+virtual/udev-217-r7
+
+# 2026-10-18: Bluetooth codecs pipewire is built without (env/bt-codecs.conf)
+media-libs/libfreeaptx-0.1.1-r1
+media-libs/libldac-2.0.2.3-r2
+media-sound/liblc3-1.1.3
+
+# 2026-10-18 b26: regulatory.db + .p7s are built into the kernel (EXTRA_FIRMWARE)
+net-wireless/wireless-regdb-20260530

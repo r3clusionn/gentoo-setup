@@ -1,0 +1,5 @@
+# Only on the lowram test boot (kernel command line has "lowram=1"; ~/work/batch23/arm-lowram-test.sh):
+# that boot has no console to type into, so tty1 logs rec in by itself. Other boots: unchanged.
+case " $(cat /proc/cmdline) " in
+*" lowram=1 "*) agetty_options="${agetty_options:-} --autologin rec" ;;
+esac

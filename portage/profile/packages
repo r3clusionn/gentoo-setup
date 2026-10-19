@@ -1,0 +1,44 @@
+# Removed from @system (2026-10-10): no ext4, no ssh, no mail; curl replaces wget
+-*net-misc/wget
+-*sys-apps/net-tools
+-*sys-fs/e2fsprogs
+-*virtual/ssh
+-*net-mail/mailbase
+# batch 11 (2026-10-10): no man pages, no ping, no which
+-*sys-apps/man-pages
+-*virtual/man
+-*net-misc/iputils
+-*sys-apps/which
+
+# batch 15 (2026-10-14): util-linux more satisfies virtual/pager; econf skips
+# config.sub updates without gnuconfig; psmisc also in package.provided
+-*sys-devel/gnuconfig
+-*sys-apps/less
+-*sys-process/psmisc
+
+# batch 18 (2026-10-15): no text editor in the base system (owner chose it; consoles have none now)
+-*virtual/editor
+-*app-editors/nano
+
+# batch 21 (2026-10-17): console keymap = kernel default (US, UTF-8); keymaps/termencoding services dropped
+-*sys-apps/kbd
+
+# batch 21b (2026-10-17): loopback via /usr/local/sbin/lo-up (/etc/init.d/lo); ntp.start reads /proc/net/route
+-*sys-apps/iproute2
+
+# batch 24 (2026-10-17): the app-alternatives packages only own symlinks; they were
+# unmerged with their CONTENTS emptied first, so /bin/sh -> dash, awk, gzip, bzip2,
+# tar and ninja links stay (unowned). dash is in world. Undo: emerge -1 them from binpkgs.
+-*app-alternatives/sh
+-*app-alternatives/awk
+-*app-alternatives/bzip2
+-*app-alternatives/gzip
+-*app-alternatives/tar
+
+# 2026-10-18: @system virtuals nothing else depends on (providers are in world)
+-*virtual/pager
+-*virtual/dev-manager
+-*virtual/libc
+-*virtual/service-manager
+-*virtual/package-manager
+-*virtual/os-headers

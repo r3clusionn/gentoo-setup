@@ -1,0 +1,52 @@
+# Minimization plan, batch 1 (2026-10-09)
+sys-apps/openrc -netifrc
+sys-apps/iproute2 -iptables
+dev-libs/elfutils -debuginfod -libarchive
+sys-devel/binutils -debuginfod
+media-video/pipewire -X bluetooth
+sys-apps/groff -X
+media-video/ffmpeg -X -alsa -pulseaudio -fontconfig -truetype -bzip2
+media-libs/libsndfile minimal -alsa
+media-libs/harfbuzz -graphite
+media-libs/mesa -llvm
+sys-auth/pambase -passwdqc
+net-wireless/bluez -mesh -obex
+dev-vcs/git -perl -webdav -gpg -rust
+media-video/mpv -alsa -pulseaudio -lua -uchardet -lcms
+media-libs/libplacebo -lcms
+sys-apps/portage -rsync-verify
+app-portage/portage-utils -qmanifest
+# batch 11 (2026-10-10): ffmpeg TLS via openssl drops gnutls/leancrypto/libtasn1/nettle
+media-video/ffmpeg openssl -gnutls
+# public-suffix list only matters for curl cookie handling
+net-misc/curl -psl
+# venvs without bundled pip
+dev-lang/python -ensurepip
+# /bin/hostname for OpenRC (net-tools is gone)
+sys-apps/coreutils hostname
+app-accessibility/at-spi2-core -X
+# 2026-10-13 audit: libseccomp only sandboxed file(1) itself
+sys-apps/file -seccomp
+
+# batch 15 (2026-10-14): no xattr/ACL users here (drops attr, acl, virtual/acl,
+# install-xattr); udev uaccess ACLs are redundant (groups video/audio, renderD 0666)
+sys-apps/portage -xattr
+sys-apps/coreutils -xattr -acl
+sys-apps/sed -xattr -acl
+sys-devel/patch -xattr
+app-arch/tar -acl
+net-misc/rsync -acl
+sys-apps/shadow -acl
+sys-apps/systemd-utils -acl
+sys-auth/elogind -acl
+sys-libs/ncurses minimal
+# batch 15 (2026-10-15): openrc-init is PID 1 (tested); sysvinit gone
+sys-apps/openrc sysv-utils -sysvinit
+# batch 17 (2026-10-15): libasyncns is only for async DNS to network PulseAudio servers;
+# rsync xxhash only speeds up checksums (portage syncs with git)
+media-libs/libpulse -asyncns
+net-misc/rsync -xxhash
+# batch 18 (2026-10-15): since node left, only curl used c-ares/nghttp3/ngtcp2 (HTTP/3, async DNS,
+# HTTPS DNS records) and only python used sqlite; nothing here needs them
+net-misc/curl -adns -http3 -quic -httpsrr
+dev-lang/python -sqlite

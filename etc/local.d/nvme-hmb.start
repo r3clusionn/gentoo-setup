@@ -1,0 +1,5 @@
+#!/bin/sh
+# SSD host memory buffer off (batch 18, 2026-10-15). The DRAM-less KIOXIA BG6 borrows
+# 64 MiB of RAM for its mapping table; measured with ~8 GB on the drive, it changed
+# nothing in real-world reads (random QD32 writes -6%). Undo: echo 1 > /sys/class/nvme/nvme0/hmb
+for h in /sys/class/nvme/nvme*/hmb; do [ "$(cat "$h")" = 0 ] || echo 0 > "$h"; done

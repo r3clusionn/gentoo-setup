@@ -1,0 +1,7 @@
+#!/bin/sh
+# Weekly TRIM for the NVMe SSD (batch 17, 2026-10-15). There is no cron here, so
+# this runs at boot: if the last trim is more than 7 days old, trim / and /efi
+# in the background at idle I/O priority. Stamp: /var/lib/misc/fstrim.last
+stamp=/var/lib/misc/fstrim.last
+[ -n "$(find "$stamp" -mtime -7 2>/dev/null)" ] && exit 0
+( ionice -c 3 fstrim / && ionice -c 3 fstrim /efi && touch "$stamp" ) >/dev/null 2>&1 &

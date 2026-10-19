@@ -1,0 +1,14 @@
+#!/bin/sh
+# One-shot clock sync without chrony: wait (up to 5 min) for a default route
+# once iwd connects, then set the clock from an HTTPS Date header (1 s
+# resolution). -k because a wrong clock would fail certificate validation.
+(
+  i=0
+  until awk '$2 == "00000000" { f = 1 } END { exit !f }' /proc/net/route; do
+    i=$((i+1)); [ "$i" -ge 150 ] && exit 0; sleep 2
+  done
+  for u in https://www.google.com https://www.cloudflare.com https://gentoo.org; do
+    d=$(curl -skI --max-time 10 "$u" | sed -n 's/^[Dd]ate: *//p' | tr -d '\r')
+    [ -n "$d" ] && date -u -s "$d" && hwclock --systohc --utc && exit 0
+  done
+) >/dev/null 2>&1 </dev/null &

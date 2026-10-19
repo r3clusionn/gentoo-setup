@@ -1,0 +1,2 @@
+# 2026-10-18 perf audit: zlib-ng replaces zlib (same libz.so.1 ABI; SIMD deflate/inflate)
+sys-libs/zlib-ng compat
